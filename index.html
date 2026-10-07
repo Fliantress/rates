@@ -15,6 +15,6 @@ Promise.all(["USD","EUR"].map(c =>
 )).then(rs => {
   r.innerHTML = rs.map(x =>
     `<span>${sym[x.Cur_Abbreviation]}<b>${(x.Cur_OfficialRate / x.Cur_Scale).toFixed(4)}</b> <small>BYN</small></span>`
-  ).join("") + `<small>${rs[0].Date.slice(0,10)}</small>`;
+  ).join("");
 }).catch(() => r.textContent = "нет данных");
 </script>
