@@ -1,0 +1,20 @@
+<!doctype html>
+<meta charset="utf-8">
+<style>
+  html,body{margin:0;background:transparent;font:500 15px system-ui,sans-serif;color:#fff}
+  #r{display:flex;gap:28px;justify-content:center;align-items:center;height:72px;
+     background:rgba(255,255,255,.14);border-radius:12px;text-shadow:0 1px 3px rgba(0,0,0,.45)}
+  b{font-size:20px;margin-left:6px}
+  small{opacity:.65}
+</style>
+<div id="r">…</div>
+<script>
+const sym = {USD:"$", EUR:"€"};
+Promise.all(["USD","EUR"].map(c =>
+  fetch(`https://api.nbrb.by/exrates/rates/${c}?parammode=2`).then(r => r.json())
+)).then(rs => {
+  r.innerHTML = rs.map(x =>
+    `<span>${sym[x.Cur_Abbreviation]}<b>${(x.Cur_OfficialRate / x.Cur_Scale).toFixed(4)}</b> <small>BYN</small></span>`
+  ).join("") + `<small>${rs[0].Date.slice(0,10)}</small>`;
+}).catch(() => r.textContent = "нет данных");
+</script>
